@@ -12,14 +12,14 @@ const Home = () => {
 
   // GET data
   useEffect(() => {
-    fetch("/api/sheets.js")
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        setData(data);
-      })
-      .catch((err) => console.error(err));
-  }, []);
+  fetch("/api/sheets")
+    .then((res) => res.json())
+    .then((data) => {
+      console.log("API RESPONSE:", data);
+      setData(data.values || []);
+    })
+    .catch((err) => console.error(err));
+}, []);
 
   // handle input
   function handleChange(e) {
@@ -33,7 +33,7 @@ const Home = () => {
   function sendData(e) {
     e.preventDefault();
 
-    fetch("/api/sheets.js", {
+    fetch("/api/sheets", {
       method: "POST",
       body: JSON.stringify(form),
     })
@@ -42,10 +42,10 @@ const Home = () => {
         console.log(res);
 
         // refresh data after submit
-        return fetch("/api/sheets.js");
+        return fetch("/api/sheets");
       })
       .then((res) => res.json())
-      .then((data) => setData(data));
+      .then((data) => setData(data.values || []));
 
     // reset form
     setForm({ name: "", email: "", message: "" });
