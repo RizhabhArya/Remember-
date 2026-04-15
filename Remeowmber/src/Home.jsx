@@ -8,13 +8,11 @@ const Home = () => {
     email: "",
     message: "",
   });
-
-  const GoogleURL =
-    "https://script.google.com/macros/s/AKfycbzZHaqWdIndsjHb5sFFe8uVnODEN1d-hYkJgSZjLqTcowN1hLDFzpPDGQ5puVPKbWaFzg/exec";
+    
 
   // GET data
   useEffect(() => {
-    fetch(GoogleURL)
+    fetch("/api/sheets.js")
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
@@ -35,7 +33,7 @@ const Home = () => {
   function sendData(e) {
     e.preventDefault();
 
-    fetch(GoogleURL, {
+    fetch("/api/sheets.js", {
       method: "POST",
       body: JSON.stringify(form),
     })
@@ -44,7 +42,7 @@ const Home = () => {
         console.log(res);
 
         // refresh data after submit
-        return fetch(GoogleURL);
+        return fetch("/api/sheets.js");
       })
       .then((res) => res.json())
       .then((data) => setData(data));
