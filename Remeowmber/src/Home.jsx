@@ -11,14 +11,20 @@ const Home = () => {
     
 
   // GET data
-  useEffect(() => {
+useEffect(() => {
   fetch("/api/sheets")
     .then((res) => res.json())
     .then((data) => {
-      console.log("API RESPONSE:", data);
-      setData(data.values || []);
+      console.log("API:", data);
+
+      const safeData = Array.isArray(data) ? data : data?.values || [];
+
+      setData(safeData);
     })
-    .catch((err) => console.error(err));
+    .catch((err) => {
+      console.error(err);
+      setData([]); // IMPORTANT fallback
+    });
 }, []);
 
   // handle input
@@ -89,7 +95,7 @@ const Home = () => {
       <input className="columncell" type="email" value="Email address" />
       <input className="columncell" type="text" value="Message" />
 
-      {data.map((row, i) => (
+      {(data || []).map((row, i) => (
         <>
         <div className="resultcell" key={i}>
             <input type="text" value={JSON.stringify(row[0])}/>
