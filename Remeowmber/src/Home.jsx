@@ -12,7 +12,7 @@ const Home = () => {
   const GoogleURL =
     "https://script.google.com/macros/s/AKfycbzZHaqWdIndsjHb5sFFe8uVnODEN1d-hYkJgSZjLqTcowN1hLDFzpPDGQ5puVPKbWaFzg/exec";
 
-  // ✅ GET data
+  // GET data
   useEffect(() => {
     fetch(GoogleURL)
       .then((res) => res.json())
@@ -23,7 +23,7 @@ const Home = () => {
       .catch((err) => console.error(err));
   }, []);
 
-  // ✅ handle input
+  // handle input
   function handleChange(e) {
     setForm({
       ...form,
@@ -31,7 +31,7 @@ const Home = () => {
     });
   }
 
-  // ✅ POST data
+  // POST data
   function sendData(e) {
     e.preventDefault();
 
@@ -55,8 +55,8 @@ const Home = () => {
 
   return (
     <div className="homie">
-      {/* ✅ FORM */}
 
+        {/* Form */}
       <form onSubmit={sendData}>
         <div className="form-title">Send & Recieve Emails</div>
         <input
@@ -68,12 +68,14 @@ const Home = () => {
         <input
           name="email"
           placeholder="Email"
+          type="email"
           value={form.email}
           onChange={handleChange}
         />
         <input
           name="message"
           placeholder="Message"
+          type="text"
           value={form.message}
           onChange={handleChange}
         />
@@ -84,19 +86,20 @@ const Home = () => {
       <hr />
 
       <div className="result">
-      {/* ✅ DISPLAY DATA */}
     
       <input className="columncell" type="text" value="Name" />
-      <input className="columncell" type="text" value="Email address" />
+      <input className="columncell" type="email" value="Email address" />
       <input className="columncell" type="text" value="Message" />
 
       {data.map((row, i) => (
         <>
         <div className="resultcell" key={i}>
             <input type="text" value={JSON.stringify(row[0])}/>
-            <input type="text" value={JSON.stringify(row[1])}/>
+            <input type="email" value={JSON.stringify(row[1])}/>
             <input type="text" value={JSON.stringify(row[2])}/>
         </div>
+
+
         </>
       ))}
 
