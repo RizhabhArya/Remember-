@@ -1,0 +1,102 @@
+import React, { useState, useEffect } from "react";
+import "./index.css";
+
+const Home = () => {
+  const [data, setData] = useState([]);
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+
+  const GoogleURL =
+    "https://script.google.com/macros/s/AKfycbzZHaqWdIndsjHb5sFFe8uVnODEN1d-hYkJgSZjLqTcowN1hLDFzpPDGQ5puVPKbWaFzg/exec";
+
+  // ✅ GET data
+  useEffect(() => {
+    fetch(GoogleURL)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setData(data);
+      })
+      .catch((err) => console.error(err));
+  }, []);
+
+  // ✅ handle input
+  function handleChange(e) {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    });
+  }
+
+  // ✅ POST data
+  function sendData(e) {
+    e.preventDefault();
+
+    fetch(GoogleURL, {
+      method: "POST",
+      body: JSON.stringify(form),
+    })
+      .then((res) => res.text())
+      .then((res) => {
+        console.log(res);
+
+        // refresh data after submit
+        return fetch(GoogleURL);
+      })
+      .then((res) => res.json())
+      .then((data) => setData(data));
+
+    // reset form
+    setForm({ name: "", email: "", message: "" });
+  }
+
+  return (
+    <div className="homie">
+      {/* ✅ FORM */}
+
+      <form onSubmit={sendData}>
+        <div className="form-title">Send & Recieve Emails</div>
+        <input
+          name="name"
+          placeholder="Name"
+          value={form.name}
+          onChange={handleChange}
+        />
+        <input
+          name="email"
+          placeholder="Email"
+          value={form.email}
+          onChange={handleChange}
+        />
+        <input
+          name="message"
+          placeholder="Message"
+          value={form.message}
+          onChange={handleChange}
+        />
+
+        <button type="submit">Send</button>
+      </form>
+
+      <hr />
+
+      <div className="result">
+      {/* ✅ DISPLAY DATA */}
+      {data.map((row, i) => (
+        <>
+        <div className="resultcell" key={i}>
+            <input type="text" value={JSON.stringify(row[0])}/>
+            <input type="text" value={JSON.stringify(row[1])}/>
+            <input type="text" value={JSON.stringify(row[2])}/>
+        </div>
+        </>
+      ))}
+
+      </div>
+    </div>
+  );
+};
+export default Home;
