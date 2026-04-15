@@ -7,7 +7,7 @@ function App() {
   return (
     <>
     <header>
-      <h1>Meow 🐱</h1>
+      <h1>Remeowmber 🐱</h1>
     </header>
       <Home/> 
     </>

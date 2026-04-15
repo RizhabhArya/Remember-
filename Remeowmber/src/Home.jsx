@@ -85,6 +85,11 @@ const Home = () => {
 
       <div className="result">
       {/* ✅ DISPLAY DATA */}
+    
+      <input className="columncell" type="text" value="Name" />
+      <input className="columncell" type="text" value="Email address" />
+      <input className="columncell" type="text" value="Message" />
+
       {data.map((row, i) => (
         <>
         <div className="resultcell" key={i}>

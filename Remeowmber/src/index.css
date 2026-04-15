@@ -59,10 +59,11 @@ button{
 }
 
 .resultcell{
-    /* display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column; */
     background-color: white;
-    border: 1px solid black;   
+    border: 1px solid black;
+}
+
+.columncell{
+    border: 2px solid black;
+    border-style:ridge;
 }
